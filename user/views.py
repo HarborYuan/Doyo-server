@@ -2,6 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from user.models import User
 import hashlib
 import datetime
+import random
 
 from user.lib import verify_email, generate_verification_code
 
@@ -42,7 +43,8 @@ def register(request):
         User.objects.create(
             email=email,
             username=username,
-            password=password
+            password=password,
+            token="0"
         )
     except Exception:
         return JsonResponse({
@@ -71,8 +73,16 @@ def login(request):
             'msg': 'email address does not exists'
         })
     if (r.password == password):
+        token_num = random.randint(0, 2**512)
+        token_bytes = bytes.fromhex(hex(token_num)[2:])
+        token = hashlib.sha3_512(token_bytes).hexdigest()
+        id = r.id
+        r.token = token
+        r.save()
         return JsonResponse({
-            'err': 0
+            'err': 0,
+            'id': id,
+            'token': token
         })
     return JsonResponse({
         'err': 1,
@@ -96,6 +106,28 @@ def email_verify(request):
     request.session['email_verify'] = email
     request.session['token_verify'] = generate_verification_code(6)
     verify_email(request.session.get('token_verify'), email)
+    return JsonResponse({
+        'err': 0
+    })
+
+
+def logout(request):
+    id = request.POST.get('id')
+    token = request.POST.get('token')
+    try:
+        r = User.objects.get(id=id)
+    except Exception:
+        return JsonResponse({
+            'err': 1,
+            'msg': 'User does not exists'
+        })
+    if (r.token != token):
+        return JsonResponse({
+            'err': 1,
+            'msg': 'token error'
+        })
+    r.token = '0'
+    r.save()
     return JsonResponse({
         'err': 0
     })
