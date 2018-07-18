@@ -20,8 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# DO CHANGE WHEN DEPLOY!
-SECRET_KEY = '=w%fb-tkln-#9wqi(kvo!jew1rnsro4jfb*2)v(gn)aalkccu)'
+SECRET_KEY = 'd*bLQXv3oTEkFu0lcCHa&t^4R4s2j9hizLA4P^jUtLEhSG#r3J3Y4!60OYyYAMIzv88JN$V*VExOePqqssrN^gOPob9b3a#trqwU'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -120,3 +119,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR,'static/')
+
+
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.example.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'example@example.com'
+EMAIL_HOST_PASSWORD = 'example123456'
+DEFAULT_FROM_EMAIL = 'example <example@example.com>'

@@ -107,3 +107,4 @@ venv.bak/
 #django
 settings.py
 doyo/__pycache__/
+static/
