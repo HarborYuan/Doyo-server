@@ -3,7 +3,7 @@ import random
 
 message_verify = '''Hello, 
 
-Your verification code number is :
+Your verification code is :
 
 %s
 
