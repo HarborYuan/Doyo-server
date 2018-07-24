@@ -8,7 +8,7 @@ from user.lib import verify_email, generate_verification_code
 
 
 def index(request):
-    return HttpResponse("It's the user module, and it's no ussessione to access this page")
+    return HttpResponse("It's the user module, and it's no use to access this page")
 
 
 def register(request):
